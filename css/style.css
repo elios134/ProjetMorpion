@@ -21,10 +21,10 @@ h1 {
   font-size: 1.1em;
 }
 
-#modeJeu {
-  padding: 8px 12px;
-  border-radius: 10px;
-  border: 1px solid #d1d1d6;
+select {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--gris-bord);
   background-color: #ffffff;
   font-family: inherit;
   font-size: 0.95em;

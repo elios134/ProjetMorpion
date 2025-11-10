@@ -13,10 +13,11 @@ let boutonRestart = document.querySelector("#Restart");
 
 let selectMode = document.querySelector("#modeJeu")
 
-let actualPlayer = "X"
+// === Variables globales ===
+let actualPlayer = "X";
 let etatPlateau = ["", "", "", "", "", "", "", "", ""];
 let gameActive = false;
-let modeOrdi = true;
+let modeOrdinateur = true;
 
 let score = {
   X: 0,
