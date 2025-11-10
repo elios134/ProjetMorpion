@@ -1,0 +1,132 @@
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  background-color: #f2f2f7;
+  color: #1c1c1e;
+  text-align: center;
+  margin: 0;
+  padding: 40px;
+}
+
+h1 {
+  font-weight: 600;
+  font-size: 2rem;
+  color: #007aff;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+}
+
+/*  Section des options */
+#options {
+  margin-bottom: 15px;
+  font-size: 1.1em;
+}
+
+#modeJeu {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #d1d1d6;
+  background-color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95em;
+  cursor: pointer;
+  box-shadow: 0 2px 6px #1c1c1e;
+  transition: all 0.3s ease;
+}
+
+#modeJeu:hover {
+  transform: scale(1.05);
+}
+/*  Boutons */
+#boutons {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  padding: 10px 22px;
+  border: none;
+  border-radius: 10px;
+  background: #007aff;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px #1c1c1e;
+  transition: all 0.25s ease;
+  margin: 6px;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  background-color: #005fcc;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/*  Plateau du jeu */
+#Morpion {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(90px, 110px));
+  grid-template-rows: repeat(3, minmax(90px, 110px));
+  gap: 10px;
+  justify-content: center;
+  margin: 20px auto;
+
+}
+#MorpionContainer{
+  display: none;
+}
+.case {
+  background: var(--case);
+  border: 2px solid #d1d1d6;
+  border-radius: 15px;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #007aff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px #1c1c1e;
+  transition: all 0.25s ease;
+  background-color: #ffffff;
+  box-shadow: #1c1c1e;
+}
+
+.case:hover {
+  transform: scale(1.05);
+  background-color: #f9f9f9;
+}
+
+.case:disabled {
+  opacity: 0.8;
+  cursor: default;
+  transform: none;
+}
+
+/* Statut & score */
+#statut {
+  font-size: 1.2em;
+  margin-top: 15px;
+  color: #1c1c1e;
+}
+
+#scores {
+  font-weight: 600;
+  font-size: 1.1em;
+  margin-top: 8px;
+  background: white;
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px #1c1c1e;
+}
+#EndGame{
+  display: none;
+}
+#Restart{
+  display: none;
+}

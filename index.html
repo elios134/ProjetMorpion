@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Morpion & Puissance 4</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+  <h1>Jeu du Morpion</h1>
+
+  <div id="options">
+    <label for="modeJeu">Mode :</label>
+    <select id="modeJeu">
+      <option value="joueur">Joueur vs Joueur</option>
+      <option value="ordinateur">Joueur vs Ordinateur</option>
+    </select>
+
+  </div>
+
+  <div id="boutons">
+    <button id="Start">Démarrer</button>
+    <button id="EndGame">Arrêter</button>
+    <button id="Restart">Rejouer</button>
+  </div>
+
+
+  <div id="MorpionContainer">
+    <div id="Morpion" class="plateau">
+      <button class="case" id="case0"></button>
+      <button class="case" id="case1"></button>
+      <button class="case" id="case2"></button>
+      <button class="case" id="case3"></button>
+      <button class="case" id="case4"></button>
+      <button class="case" id="case5"></button>
+      <button class="case" id="case6"></button>
+      <button class="case" id="case7"></button>
+      <button class="case" id="case8"></button>
+    </div>
+  </div>
+
+
+
+  <p id="statut">Au tour de : <span id="joueur">X</span></p>
+  <p id="scores">Score — X: <span id="scoreX">0</span> | O: <span id="scoreO">0</span></p>
+
+  <script src="/script/morpion.js"></script>
+</body>
+
+</html>
