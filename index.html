@@ -11,13 +11,20 @@
 
 <body>
 
-  <h1>Jeu du Morpion</h1>
+  <h1>Morpion ou Puissance-4</h1>
 
   <div id="options">
     <label for="modeJeu">Mode :</label>
     <select id="modeJeu">
       <option value="joueur">Joueur vs Joueur</option>
       <option value="ordinateur">Joueur vs Ordinateur</option>
+    </select>
+  </div>
+  <div id="Games">
+    <label for="Jeu">Jeu :</label>
+    <select  id="Jeu">
+      <option value="morpion">Morpion</option>
+      <option value="puissance4">Puissance 4</option>
     </select>
 
   </div>
@@ -43,6 +50,9 @@
     </div>
   </div>
 
+   <div id="Puissance4Container">
+    <div id="Puissance4"></div>
+  </div>
 
 
   <p id="statut">Au tour de : <span id="joueur">X</span></p>

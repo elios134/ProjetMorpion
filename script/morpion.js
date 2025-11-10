@@ -1,5 +1,6 @@
-let plateau = document.querySelector("#Morpion")
-let cases = document.querySelectorAll("#Morpion .case")
+// === Sélection des éléments ===
+let plateau = document.querySelector("#Morpion");
+let cases = document.querySelectorAll("#Morpion .case");
 
 let texteStatut = document.querySelector("#statut");
 let joueurActuelSpan = document.querySelector("#joueur");
@@ -11,7 +12,8 @@ let boutonStart = document.querySelector("#Start");
 let boutonEndGame = document.querySelector("#EndGame");
 let boutonRestart = document.querySelector("#Restart");
 
-let selectMode = document.querySelector("#modeJeu")
+let selectMode = document.querySelector("#modeJeu");
+let selectGame = document.querySelector("#Jeu");
 
 // === Variables globales ===
 let actualPlayer = "X";
@@ -29,9 +31,16 @@ let winCombi = [
   [0, 3, 6], [1, 4, 7], [2, 5, 8],
   [0, 4, 8], [2, 4, 6]
 ];
+
+// === Puissance 4 ===
+let grillePuissance4 = [];
+let lignesP4 = 6;
+let colonnesP4 = 7;
+
+// === Bouton Start ===
 boutonStart.addEventListener("click", function () {
   modeOrdinateur = (selectMode.value === "ordinateur");
-  startGame();
+    startGame();
 })
 
 function startGame() {
