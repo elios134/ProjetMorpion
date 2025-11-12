@@ -82,7 +82,7 @@ function startGame() {
   } else if (selectGame.value == "puissance4") {
     // === Initialisation du Puissance 4 ===
     gameActive = true;
-     etatPlateau = [];
+    etatPlateau = [];
     for (let i = 0; i < 42; i++) {
       etatPlateau.push("");
     }
@@ -146,6 +146,12 @@ function clicCase() {
   this.textContent = actualPlayer;
   this.disabled = true;
 
+  // Ajout de couleur si c’est un joueur O (et non l’ordinateur)
+  if (!modeOrdinateur && actualPlayer === "O") {
+    this.style.color = "red"; // ou n’importe quelle couleur
+  } else if (!modeOrdinateur && actualPlayer === "X") {
+    this.style.color = "blue"; // optionnel, pour équilibrer visuellement
+  }
   if (verifierVictoireM()) {
     gameActive = false;
     texteStatut.textContent = "Le joueur " + actualPlayer + " gagne !";
@@ -187,6 +193,12 @@ function clicP4() {
       let cell = document.getElementById("p4case" + i);
       cell.textContent = actualPlayer;
       cell.classList.add("drop");
+      // Couleur différente si mode joueur vs joueur
+      if (!modeOrdinateur && actualPlayer === "O") {
+        cell.style.color = "red";
+      } else if (!modeOrdinateur && actualPlayer === "X") {
+        cell.style.color = "blue";
+      }
       setTimeout(() => cell.classList.remove("drop"), 500);
       break;
     }
@@ -236,6 +248,7 @@ function tourOrdinateur() {
     let choix = casesVides[Math.floor(Math.random() * casesVides.length)];
     etatPlateau[choix] = "O";
     document.getElementById("case" + choix).textContent = "O";
+    document.getElementById("case" + choix).style.color = "red"
     document.getElementById("case" + choix).disabled = true;
 
     if (verifierVictoireM()) {
@@ -294,6 +307,7 @@ function tourOrdinateur() {
 
     let cell = document.getElementById("p4case" + choix);
     cell.textContent = "O";
+    cell.style.color = "red"
     cell.classList.add("drop");
     setTimeout(() => cell.classList.remove("drop"), 500);
 
