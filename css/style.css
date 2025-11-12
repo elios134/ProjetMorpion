@@ -36,6 +36,7 @@ select {
 #modeJeu:hover {
   transform: scale(1.05);
 }
+
 /*  Boutons */
 #boutons {
   margin-bottom: 20px;
@@ -76,9 +77,11 @@ button:disabled {
   margin: 20px auto;
 
 }
-#MorpionContainer{
+
+#MorpionContainer {
   display: none;
 }
+
 .case {
   background: var(--case);
   border: 2px solid #d1d1d6;
@@ -107,6 +110,47 @@ button:disabled {
   transform: none;
 }
 
+#Puissance4Container {
+  display: none;
+}
+
+#Puissance4 {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(90px, 110px));
+  grid-template-rows: repeat(6, minmax(90px, 110px));
+  gap: 10px;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+.grid {
+  background: var(--case);
+  border: 2px solid #d1d1d6;
+  border-radius: 30px;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #007aff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px #1c1c1e;
+  transition: all 0.25s ease;
+  background-color: #ffffff;
+  box-shadow: #1c1c1e;
+}
+
+.grid:hover {
+  transform: scale(1.05);
+  background-color: #f9f9f9;
+}
+
+.grid:disabled {
+  opacity: 0.8;
+  cursor: default;
+  transform: none;
+}
+
 /* Statut & score */
 #statut {
   font-size: 1.2em;
@@ -124,9 +168,11 @@ button:disabled {
   border-radius: 10px;
   box-shadow: 0 3px 8px #1c1c1e;
 }
-#EndGame{
+
+#EndGame {
   display: none;
 }
-#Restart{
+
+#Restart {
   display: none;
 }

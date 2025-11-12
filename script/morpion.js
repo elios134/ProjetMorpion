@@ -1,6 +1,9 @@
 // === Sélection des éléments ===
-let plateau = document.querySelector("#Morpion");
-let cases = document.querySelectorAll("#Morpion .case");
+let morpionPlateau = document.querySelector("#Morpion");
+let morpionCases = document.querySelectorAll(".case");
+
+let puissance4Plateau = document.querySelector("#Puissance4")
+let puissance4Case = document.querySelectorAll(".grid")
 
 let texteStatut = document.querySelector("#statut");
 let joueurActuelSpan = document.querySelector("#joueur");
@@ -16,7 +19,9 @@ let selectMode = document.querySelector("#modeJeu");
 let selectGame = document.querySelector("#Jeu");
 
 // === Variables globales ===
-let actualPlayer = "X";
+let playerOne = "X";
+let playertwo = "O"
+let actualPlayer
 let etatPlateau = ["", "", "", "", "", "", "", "", ""];
 let gameActive = false;
 let modeOrdinateur = true;
@@ -32,34 +37,54 @@ let winCombi = [
   [0, 4, 8], [2, 4, 6]
 ];
 
-// === Puissance 4 ===
-let grillePuissance4 = [];
-let lignesP4 = 6;
-let colonnesP4 = 7;
-
 // === Bouton Start ===
 boutonStart.addEventListener("click", function () {
   modeOrdinateur = (selectMode.value === "ordinateur");
-    startGame();
+  startGame();
 })
 
 function startGame() {
-  gameActive = true;
-  boutonStart.style.display = "none"
-  boutonEndGame.style.display = "block"
-  boutonRestart.style.display = "none"
-  document.getElementById("MorpionContainer").style.display = "block"
-  actualPlayer = "X"
-  etatPlateau = ["", "", "", "", "", "", "", "", ""]
-  joueurActuelSpan.textContent = actualPlayer;
-  texteStatut.textContent = "Au tour de : ";
-  texteStatut.appendChild(joueurActuelSpan);
+  if (selectGame.value == "morpion") {
+    gameActive = true;
+    morpionPlateau.innerHTML = ""; // 🔥 vide les anciennes cases
+    document.getElementById("Puissance4Container").style.display = "none";
+    boutonStart.style.display = "none"
+    boutonEndGame.style.display = "block"
+    boutonRestart.style.display = "none"
+    document.getElementById("MorpionContainer").style.display = "block"
+    actualPlayer = playerOne
+    etatPlateau = ["", "", "", "", "", "", "", "", ""]
+    joueurActuelSpan.textContent = actualPlayer;
+    texteStatut.textContent = "Au tour de : ";
+    texteStatut.appendChild(joueurActuelSpan);
+    for (let i = 0; i < 9; i++) {
+      let square = document.createElement("div");
+      square.setAttribute("class", "case");
+      square.setAttribute("id", "case" + i);
+      square.addEventListener("click", clicCase);
+      morpionPlateau.appendChild(square);
+    }
+    morpionCases = document.querySelectorAll(".case");
 
-  cases = document.querySelectorAll("#Morpion .case");
-  for (let i = 0; i < cases.length; i++) {
-    cases[i].textContent = ""
-    cases[i].disabled = false
-    cases[i].addEventListener("click", clicCase)
+  } else if (selectGame.value == "puissance4") {
+    gameActive = true;
+    puissance4Plateau.innerHTML = ""; //  vide la grille
+    document.getElementById("MorpionContainer").style.display = "none"
+    boutonStart.style.display = "none"
+    boutonEndGame.style.display = "block"
+    boutonRestart.style.display = "none"
+    document.getElementById("Puissance4Container").style.display = "block"
+    actualPlayer = playerOne
+    joueurActuelSpan.textContent = actualPlayer;
+    texteStatut.textContent = "Au tour de : ";
+    texteStatut.appendChild(joueurActuelSpan);
+    puissance4Case = document.querySelectorAll(".grid");
+    for (let i = 0; i < 42; i++) {
+      let square = document.createElement("div")
+      square.setAttribute("class", "grid")
+      square.addEventListener("click", clicP4);
+      puissance4Plateau.appendChild(square)
+    }
   }
 }
 
@@ -68,38 +93,37 @@ boutonEndGame.addEventListener("click", function () {
 })
 
 function stopGame(message) {
-  gameActive = false
-  boutonEndGame.style.display = "none"
-  boutonRestart.style.display = "block"
-  for (let i = 0; i < cases.length; i++) {
-    cases[i].disabled = true;
+  gameActive = false;
+  boutonEndGame.style.display = "none";
+  boutonRestart.style.display = "block";
+
+  const elements = document.querySelectorAll(".case, .grid");
+  for (let i = 0; i < elements.length; i++) {
+    elements[i].style.pointerEvents = "none";
   }
+
+
   texteStatut.textContent = message;
 }
+
 
 boutonRestart.addEventListener("click", function () {
   startGame()
 })
 
-function clicCase(e) {
-  if (!gameActive) return;
+function clicCase() {
+  if (!gameActive || this.textContent !== "") return;
 
-  let idCase = e.currentTarget.id;
-  let index = parseInt(idCase.replace("case", ""), 10);
-
-  if (etatPlateau[index] !== "") return;
-
-  // Le joueur humain joue
+  let index = Array.from(morpionCases).indexOf(this);
   etatPlateau[index] = actualPlayer;
-  e.currentTarget.textContent = actualPlayer;
-  e.currentTarget.disabled = true;
+  this.textContent = actualPlayer;
+  this.disabled = true;
 
   if (verifierVictoire()) {
     gameActive = false;
     texteStatut.textContent = "Le joueur " + actualPlayer + " gagne !";
     score[actualPlayer]++;
     mettreAJourScore();
-
     boutonEndGame.style.display = "none";
     boutonRestart.style.display = "block";
     return;
@@ -107,22 +131,54 @@ function clicCase(e) {
 
   if (!casesDisponibles()) {
     gameActive = false;
-    texteStatut.textContent = "Égalité ";
-
+    texteStatut.textContent = "Égalité";
     boutonEndGame.style.display = "none";
     boutonRestart.style.display = "block";
     return;
   }
 
-  // Tour suivant
-  actualPlayer = (actualPlayer === "X") ? "O" : "X";
+  actualPlayer = (actualPlayer === playerOne) ? "O" : "X";
   joueurActuelSpan.textContent = actualPlayer;
 
-  // Si mode ordinateur activé
   if (modeOrdinateur && actualPlayer === "O" && gameActive) {
     setTimeout(tourOrdinateur, 500);
   }
 }
+
+function clicP4() {
+  if (!gameActive || this.textContent !== "") return;
+
+  let index = Array.from(puissance4Case).indexOf(this);
+  etatPlateau[index] = actualPlayer;
+  this.textContent = actualPlayer;
+  this.disabled = true;
+
+  if (verifierVictoire()) {
+    gameActive = false;
+    texteStatut.textContent = "Le joueur " + actualPlayer + " gagne !";
+    score[actualPlayer]++;
+    mettreAJourScore();
+    boutonEndGame.style.display = "none";
+    boutonRestart.style.display = "block";
+    return;
+  }
+
+  if (!casesDisponibles()) {
+    gameActive = false;
+    texteStatut.textContent = "Égalité";
+    boutonEndGame.style.display = "none";
+    boutonRestart.style.display = "block";
+    return;
+  }
+
+  actualPlayer = (actualPlayer === playerOne) ? "O" : "X";
+  joueurActuelSpan.textContent = actualPlayer;
+
+  if (modeOrdinateur && actualPlayer === "O" && gameActive) {
+    setTimeout(tourOrdinateur, 500);
+  }
+}
+
 
 function tourOrdinateur() {
   if (!gameActive) return;
@@ -144,8 +200,6 @@ function tourOrdinateur() {
     texteStatut.textContent = "L’ordinateur gagne !";
     score["O"]++;
     mettreAJourScore();
-
-
     boutonEndGame.style.display = "none";
     boutonRestart.style.display = "block";
     return;
@@ -161,7 +215,7 @@ function tourOrdinateur() {
   }
 
   actualPlayer = "X";
-  joueurActuelSpan.textContent = actualPlayerl;
+  joueurActuelSpan.textContent = actualPlayer;
 }
 
 function verifierVictoire() {
@@ -181,3 +235,6 @@ function mettreAJourScore() {
   scoreXElement.textContent = score.X;
   scoreOElement.textContent = score.O;
 }
+
+
+
